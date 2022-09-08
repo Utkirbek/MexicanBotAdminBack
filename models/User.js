@@ -21,12 +21,17 @@ const userSchema = new mongoose.Schema(
     chatid: {
       type: String,
       required: true,
-      unique: true,
+      
     },
     phone: {
       type: String,
       required: false,
     },
+    username: {
+      type: String,
+      required: false,
+    },
+
     status: {
       type: String,
       required: true,
