@@ -215,10 +215,16 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
+const checkUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    res.send(user);
+    const user = await User.findOne({chatid:req.body.chatid});
+    console.log(user);
+    if (user === null) {
+      res.send({ error: "User not found" });
+    }else{
+      res.send({user:user});
+    }
+  
   } catch (err) {
     res.status(500).send({
       message: err.message,
@@ -323,7 +329,8 @@ module.exports = {
   // resetPassword,
   checkUserStatus,
   getAllUsers,
-  getUserById,
+
+  checkUser,
   // updateUser,
   deleteUser,
 };

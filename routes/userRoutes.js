@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const {
- 
+  checkUser,
   registerUser,
   checkUserStatus,
   // verifyEmailAddress,
   updateStatusUser,
   getAllUsers,
-  getUserById,
+  
   // updateUser,
   deleteUser,
 } = require('../controller/userController');
@@ -40,13 +40,14 @@ const {
 
 router.post('/add', registerUser);
 router.get("/check/status/:id", checkUserStatus);
+router.post("/check", checkUser)
 
 router.get("/status/:id/:status", updateStatusUser);
 //get all user
 router.get('/', getAllUsers);
 
 //get a user
-router.get('/:id', getUserById);
+;
 
 // //update a user
 // router.put('/:id', updateUser);
