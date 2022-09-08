@@ -32,8 +32,8 @@ app.get('/', (req, res) => {
 
 //this for route will need for store front, also for admin dashboard
 app.use('/api/products/', productRoutes);
-app.use('/api/category/', categoryRoutes);
-app.use('/api/coupon/', couponRoutes);
+// app.use('/api/category/', categoryRoutes);
+// app.use('/api/coupon/', couponRoutes);
 app.use('/api/user/', userRoutes);
 app.use('/api/order/', isAuth, userOrderRoutes);
 

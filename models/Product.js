@@ -18,14 +18,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    parent: {
-      type: String,
-      required: true,
-    },
-    children: {
-      type: String,
-      required: true,
-    },
+
     image: {
       type: String,
       required: true,

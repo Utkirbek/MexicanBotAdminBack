@@ -107,8 +107,6 @@ const updateProduct = async (req, res) => {
       product.title = req.body.title;
       product.slug = req.body.slug;
       product.description = req.body.description;
-      product.parent = req.body.parent;
-      product.children = req.body.children;
       product.type = req.body.type;
       product.unit = req.body.unit;
       product.quantity = req.body.quantity;
