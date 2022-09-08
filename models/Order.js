@@ -8,10 +8,17 @@ const orderSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    invoice: {
-      type: Number,
-      required: false,
+    location: {
+      long: {
+        type: Number,
+        required: true,
+      },
+      lat: {
+        type: Number,
+        required: true,
+      }
     },
+
     cart: [{}],
     name: {
       type: String,
