@@ -8,7 +8,7 @@ const {
 
   getAllUsers,
   getUserById,
-  updateUser,
+  // updateUser,
   deleteUser,
 } = require('../controller/userController');
 const {
@@ -45,8 +45,8 @@ router.get('/', getAllUsers);
 //get a user
 router.get('/:id', getUserById);
 
-//update a user
-router.put('/:id', updateUser);
+// //update a user
+// router.put('/:id', updateUser);
 
 //delete a user
 router.delete('/:id', deleteUser);
