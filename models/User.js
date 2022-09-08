@@ -30,6 +30,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    isChecked:{
+      type: String,
+      default: "Pending",
+      enum: ["Pending", "Done"],
+
+    },
 
     status: {
       type: String,

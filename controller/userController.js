@@ -293,6 +293,7 @@ const updateStatusUser = (req, res) => {
     {
       $set: {
         status: newStatus,
+        isChecked: "Done"
       },
     },
     (err) => {
