@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const {
-  loginUser,
+ 
   registerUser,
-  signUpWithProvider,
+
   verifyEmailAddress,
-  forgetPassword,
-  changePassword,
-  resetPassword,
+
   getAllUsers,
   getUserById,
   updateUser,
@@ -19,26 +17,28 @@ const {
 } = require('../config/others');
 
 //verify email
-router.post('/verify-email', emailVerificationLimit, verifyEmailAddress);
+// router.post('/verify-email', emailVerificationLimit, verifyEmailAddress);
 
-//register a user
-router.post('/register/:token', registerUser);
+// //register a user
+// router.post('/register/:token', registerUser);
 
-//login a user
-router.post('/login', loginUser);
+// //login a user
+// router.post('/login', loginUser);
 
-//register or login with google and fb
-router.post('/signup', signUpWithProvider);
+// //register or login with google and fb
+// router.post('/signup', signUpWithProvider);
 
-//forget-password
-router.put('/forget-password', passwordVerificationLimit, forgetPassword);
+// //forget-password
+// router.put('/forget-password', passwordVerificationLimit, forgetPassword);
 
-//reset-password
-router.put('/reset-password', resetPassword);
+// //reset-password
+// router.put('/reset-password', resetPassword);
 
-//change password
-router.post('/change-password', changePassword);
+// //change password
+// router.post('/change-password', changePassword);
 
+
+router.post('/add', registerUser);
 //get all user
 router.get('/', getAllUsers);
 

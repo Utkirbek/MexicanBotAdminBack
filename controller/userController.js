@@ -39,45 +39,19 @@ const verifyEmailAddress = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const token = req.params.token;
-  const { name, email, password } = jwt.decode(token);
-  const isAdded = await User.findOne({ email: email });
+  
+  const isAdded = await User.findOne({ chatid: req.body.chatid });
 
-  if (isAdded) {
-    const token = signInToken(isAdded);
-    return res.send({
-      token,
-      name: isAdded.name,
-      email: isAdded.email,
-      message: 'Email Already Verified!',
-    });
-  }
+ const newUser = new User({
+   ...req.body,
+ });
+ newUser.save();
 
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET_FOR_VERIFY, (err, decoded) => {
-      if (err) {
-        return res.status(401).send({
-          message: 'Token Expired, Please try again!',
-        });
-      } else {
-        const newUser = new User({
-          name,
-          email,
-          password: bcrypt.hashSync(password),
-        });
-        newUser.save();
-        const token = signInToken(newUser);
-        res.send({
-          token,
-          _id: newUser._id,
-          name: newUser.name,
-          email: newUser.email,
-          message: 'Email Verified, Please Login Now!',
-        });
-      }
-    });
-  }
-};
+ res.send({
+   message: "Your account created successfully, you can login now!",
+ });}
+    
+  
 
 const loginUser = async (req, res) => {
   try {
