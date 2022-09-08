@@ -226,6 +226,24 @@ const getUserById = async (req, res) => {
   }
 };
 
+const checkUserStatus = async (req, res) => {
+  try {
+    const user = await User.find({chatid :req.params.id});
+    console.log(user);
+    console.log(req.params.id);
+    if (user[0].status==="verified") {
+      res.send({"isVerified":true});
+    }else{
+      res.send({"isVerified":false});
+    }
+
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 // const updateUser = async (req, res) => {
 //   try {
 //     const user = await User.findById(req.params.id);
@@ -302,6 +320,7 @@ module.exports = {
   // forgetPassword,
   // changePassword,
   // resetPassword,
+  checkUserStatus,
   getAllUsers,
   getUserById,
   // updateUser,

@@ -3,7 +3,7 @@ const router = express.Router();
 const {
  
   registerUser,
-
+  checkUserStatus,
   // verifyEmailAddress,
   updateStatusUser,
   getAllUsers,
@@ -39,6 +39,7 @@ const {
 
 
 router.post('/add', registerUser);
+router.get("/check/status/:id", checkUserStatus);
 
 router.get("/status/:id/:status", updateStatusUser);
 //get all user
