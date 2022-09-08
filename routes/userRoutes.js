@@ -4,8 +4,8 @@ const {
  
   registerUser,
 
-  verifyEmailAddress,
-
+  // verifyEmailAddress,
+  updateStatusUser,
   getAllUsers,
   getUserById,
   // updateUser,
@@ -39,6 +39,8 @@ const {
 
 
 router.post('/add', registerUser);
+
+router.post("/status/:id", updateStatusUser);
 //get all user
 router.get('/', getAllUsers);
 

@@ -268,9 +268,35 @@ const deleteUser = (req, res) => {
   });
 };
 
+const updateStatusUser = (req, res) => {
+  const newStatus = req.body.status;
+  User.updateOne(
+    { _id: req.params.id },
+    {
+      $set: {
+        status: newStatus,
+      },
+    },
+    (err) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message,
+        });
+      } else {
+        res.status(200).send({
+          message: `Product ${newStatus} Successfully!`,
+        });
+      }
+    }
+  );
+};
+
+updateStatusUser;
+
 module.exports = {
   // loginUser,
   registerUser,
+  updateStatusUser,
   // // signUpWithProvider,
   // verifyEmailAddress,
   // forgetPassword,
