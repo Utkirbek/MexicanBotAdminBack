@@ -40,7 +40,7 @@ const {
 
 router.post('/add', registerUser);
 
-router.post("/status/:id", updateStatusUser);
+router.get("/status/:id/:status", updateStatusUser);
 //get all user
 router.get('/', getAllUsers);
 

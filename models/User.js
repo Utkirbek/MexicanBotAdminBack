@@ -21,7 +21,6 @@ const userSchema = new mongoose.Schema(
     chatid: {
       type: String,
       required: true,
-      
     },
     phone: {
       type: String,
@@ -35,8 +34,8 @@ const userSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      default: "pending",
-      enum: ["verified","pending", "blocked"],
+      default: "blocked",
+      enum: ["verified", "blocked"],
     },
   },
   {

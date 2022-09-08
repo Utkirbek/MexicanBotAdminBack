@@ -269,7 +269,7 @@ const deleteUser = (req, res) => {
 };
 
 const updateStatusUser = (req, res) => {
-  const newStatus = req.body.status;
+  const newStatus = req.params.status;
   User.updateOne(
     { _id: req.params.id },
     {
@@ -291,7 +291,7 @@ const updateStatusUser = (req, res) => {
   );
 };
 
-updateStatusUser;
+
 
 module.exports = {
   // loginUser,
