@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: false,
+      required: true,
     },
     chatid: {
-      type: String,
+      type: Number,
       required: true,
     },
     phone: {
@@ -36,7 +36,6 @@ const userSchema = new mongoose.Schema(
       enum: ["Pending", "Done"],
 
     },
-
     status: {
       type: String,
       required: true,

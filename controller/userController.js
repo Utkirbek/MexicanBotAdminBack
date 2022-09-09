@@ -247,8 +247,8 @@ const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?ch
 const checkUser = async (req, res) => {
   try {
     const user = await User.findOne({chatid:req.body.chatid});
-    console.log(user);
-    if (user === null) {
+    ;
+    if (!user) {
       res.send({ error: "User not found" });
     }else{
       res.send({user:user});
