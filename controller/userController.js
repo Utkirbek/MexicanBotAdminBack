@@ -223,7 +223,7 @@ const sendMessage = async (id,newStatus) => {
   if(newStatus === 'verified'){
     message = `Your account has been verified. Now you can login to your account.`
   }else if(newStatus === 'blocked'){
-    message = `Your account has been pending. Please wait for admin approval.`
+    message = `Your account has been blocked.`
   }
 const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
   await  axios.get(URL)
