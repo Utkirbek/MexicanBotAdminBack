@@ -2,6 +2,7 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const axios = require("axios").default;
 const { signInToken, tokenForVerify, sendEmail } = require('../config/auth');
 
 // const verifyEmailAddress = async (req, res) => {
@@ -215,6 +216,30 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const sendMessage = async (id,newStatus) => {
+  let user = await User.findById(id);
+  let message = '';
+  if(newStatus === 'verified'){
+    message = `Your account has been verified. Now you can login to your account.`
+  }else if(newStatus === 'blocked'){
+    message = `Your account has been pending. Please wait for admin approval.`
+  }
+const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
+  await  axios.get(URL)
+  .then(function (response) {
+    // handle success
+    
+  })
+  .catch(function (error) {
+    // handle error
+    
+  })
+  .then(function () {
+    // always executed
+  });
+
+}
+
 const checkUser = async (req, res) => {
   try {
     const user = await User.findOne({chatid:req.body.chatid});
@@ -308,6 +333,7 @@ const updateStatusUser = (req, res) => {
           message: err.message,
         });
       } else {
+        sendMessage(req.params.id,newStatus);
         res.status(200).send({
           message: `Product ${newStatus} Successfully!`,
         });
