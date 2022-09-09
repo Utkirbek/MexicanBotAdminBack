@@ -217,7 +217,8 @@ const getAllUsers = async (req, res) => {
 };
 
 const sendMessage = async (id,newStatus) => {
-  let user = await User.findById(id);
+  try{
+    let user = await User.findById(id);
   let message = '';
   if(newStatus === 'verified'){
     message = `Your account has been verified. Now you can login to your account.`
@@ -237,6 +238,9 @@ const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?ch
   .then(function () {
     // always executed
   });
+  }catch(err){
+    res.status(500).send({ message: err.message });
+  }
 
 }
 
