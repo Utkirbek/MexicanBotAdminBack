@@ -15,7 +15,10 @@ const { isAuth, isAdmin } = require('../config/auth');
 
 connectDB();
 const app = express();
-
+const cors = cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+});
 // We are using this for the express-rate-limit middleware
 // See: https://github.com/nfriedly/express-rate-limit
 // app.enable('trust proxy');
@@ -23,10 +26,7 @@ app.set('trust proxy', 1);
 
 app.use(express.json({ limit: '4mb' }));
 app.use(helmet());
-app.use(cors({
-  origin: "*" ,
-  methods:['GET','POST','PUT','DELETE'],
-}))
+app.use(cors);
 
 //root route
 app.get('/', (req, res) => {
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 app.use('/api/products/', productRoutes);
 // app.use('/api/category/', categoryRoutes);
 // app.use('/api/coupon/', couponRoutes);
-app.use('/api/user/',cors(), userRoutes);
+app.use("/api/user/", cors, userRoutes);
 app.use('/api/order/', userOrderRoutes);
 
 //if you not use admin dashboard then these two route will not needed.
