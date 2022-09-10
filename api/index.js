@@ -23,7 +23,10 @@ app.set('trust proxy', 1);
 
 app.use(express.json({ limit: '4mb' }));
 app.use(helmet());
-app.use(cors())
+app.use(cors({
+  origin: "*" ,
+  methods:['GET','POST','PUT','DELETE'],
+}))
 
 //root route
 app.get('/', (req, res) => {
@@ -34,7 +37,7 @@ app.get('/', (req, res) => {
 app.use('/api/products/', productRoutes);
 // app.use('/api/category/', categoryRoutes);
 // app.use('/api/coupon/', couponRoutes);
-app.use('/api/user/',cors(), userRoutes);
+app.use('/api/user/', userRoutes);
 app.use('/api/order/', userOrderRoutes);
 
 //if you not use admin dashboard then these two route will not needed.
