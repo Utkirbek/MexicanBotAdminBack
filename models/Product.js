@@ -14,34 +14,12 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    unit: {
-      type: String,
-      required: true,
-    },
-
+    options: [],
     image: {
       type: String,
       required: true,
     },
-    originalPrice: {
-      type: Number,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    discount: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-
+    prices: [],
     description: {
       type: String,
       required: true,
@@ -50,14 +28,6 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    tag: [String],
-
-    flashSale: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-
     status: {
       type: String,
       default: 'Show',
