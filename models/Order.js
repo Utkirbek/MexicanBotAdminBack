@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     location: {
-      long: {
+      lng: {
         type: Number,
         required: true,
       },
@@ -18,8 +18,10 @@ const orderSchema = new mongoose.Schema(
         required: true,
       }
     },
-
-    cart: [{}],
+    comment: {
+      type: String,
+      required: false,
+    },
     name: {
       type: String,
       required: true,
@@ -28,56 +30,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-    },
-    contact: {
-      type: String,
-      required: true,
-    },
-
-    city: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
-    zipCode: {
-      type: String,
-      required: true,
-    },
-    subTotal: {
-      type: Number,
-      required: true,
-    },
-    shippingCost: {
-      type: Number,
-      required: true,
-    },
-    discount: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
 
     total: {
       type: Number,
       required: true,
-    },
-    shippingOption: {
-      type: String,
-      required: false,
-    },
-    paymentMethod: {
-      type: String,
-      required: true,
-    },
-    cardInfo: {
-      type: Object,
-      required: false,
     },
     status: {
       type: String,
@@ -89,13 +45,6 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-const Order =
-  mongoose.models.Order ||
-  mongoose.model(
-    'Order',
-    orderSchema.plugin(AutoIncrement, {
-      inc_field: 'invoice',
-      start_seq: 10000,
-    })
-  );
+const Order = mongoose.models.Order 
+  
 module.exports = Order;
