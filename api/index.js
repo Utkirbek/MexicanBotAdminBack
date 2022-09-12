@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 
 //this for route will need for store front, also for admin dashboard
 app.use('/api/products/', productRoutes);
-app.use('/api/category/',cors(), categoryRoutes);
+app.use('/api/option/',cors(), optionRoutes);
 // app.use('/api/coupon/', couponRoutes);
 app.use('/api/user/', userRoutes);
 app.use('/api/order/', isAuth, userOrderRoutes);

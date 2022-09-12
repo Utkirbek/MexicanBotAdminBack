@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const optionSchema = new mongoose.Schema({
-  name: {
+  label: {
     type: String,
     required: true,
   },
-  price: {
+  value: {
     type: String,
     required: false,
   },
