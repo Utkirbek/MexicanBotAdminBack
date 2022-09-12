@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
@@ -14,12 +14,26 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    options: [],
+    options: [
+      {
+        id: String,
+        label: {
+          type: String,
+          required: true,
+        },
+        value: {
+          type: String,
+        },
+      },
+    ],
+    price: {
+      type: Number,
+      required: true,
+    },
     image: {
       type: String,
       required: true,
     },
-    prices: [],
     description: {
       type: String,
       required: true,
@@ -30,8 +44,8 @@ const productSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: 'Show',
-      enum: ['Show', 'Hide'],
+      default: "Show",
+      enum: ["Show", "Hide"],
     },
   },
 
@@ -40,6 +54,6 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;

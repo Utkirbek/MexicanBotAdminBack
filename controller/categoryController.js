@@ -1,8 +1,8 @@
-const Category = require('../models/Category');
+const Option = require('../models/Option');
 
 const addCategory = async (req, res) => {
   try {
-    const newCategory = new Category(req.body);
+    const newCategory = new Option(req.body);
     await newCategory.save();
     res.status(200).send({
       message: 'Category Added Successfully!',
@@ -16,7 +16,7 @@ const addCategory = async (req, res) => {
 
 const addAllCategory = async (req, res) => {
   try {
-    await Category.insertMany(req.body);
+    await Option.insertMany(req.body);
     res.status(200).send({
       message: 'Category Added successfully!',
     });
@@ -29,7 +29,7 @@ const addAllCategory = async (req, res) => {
 
 const getShowingCategory = async (req, res) => {
   try {
-    const categories = await Category.find({ status: 'Show' }).sort({
+    const categories = await Option.find({ status: "Show" }).sort({
       _id: -1,
     });
     res.send(categories);
@@ -42,7 +42,7 @@ const getShowingCategory = async (req, res) => {
 
 const getAllCategory = async (req, res) => {
   try {
-    const categories = await Category.find({}).sort({ _id: -1 });
+    const categories = await Option.find({}).sort({ _id: -1 });
     res.send(categories);
   } catch (err) {
     res.status(500).send({
@@ -53,7 +53,7 @@ const getAllCategory = async (req, res) => {
 
 const getCategoryById = async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
+    const category = await Option.findById(req.params.id);
     res.send(category);
   } catch (err) {
     res.status(500).send({
@@ -64,13 +64,12 @@ const getCategoryById = async (req, res) => {
 
 const updateCategory = async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
+    const category = await Option.findById(req.params.id);
     if (category) {
-      category.parent = req.body.parent;
-      // category.slug = req.body.slug;
-      category.type = req.body.type;
-      category.icon = req.body.icon;
-      category.children = req.body.children;
+      category.label = req.body.label;
+      
+      category.value = req.body.value;
+      
       await category.save();
       res.send({ message: 'Category Updated Successfully!' });
     }
@@ -82,7 +81,7 @@ const updateCategory = async (req, res) => {
 const updateStatus = (req, res) => {
   const newStatus = req.body.status;
 
-  Category.updateOne(
+  Option.updateOne(
     { _id: req.params.id },
     {
       $set: {
@@ -96,7 +95,7 @@ const updateStatus = (req, res) => {
         });
       } else {
         res.status(200).send({
-          message: `Category ${newStatus} Successfully!`,
+          message: `Option ${newStatus} Successfully!`,
         });
       }
     }
@@ -104,14 +103,14 @@ const updateStatus = (req, res) => {
 };
 
 const deleteCategory = (req, res) => {
-  Category.deleteOne({ _id: req.params.id }, (err) => {
+  Option.deleteOne({ _id: req.params.id }, (err) => {
     if (err) {
       res.status(500).send({
         message: err.message,
       });
     } else {
       res.status(200).send({
-        message: 'Category Deleted Successfully!',
+        message: "Category Deleted Successfully!",
       });
     }
   });
