@@ -22,6 +22,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    cart: [],
     name: {
       type: String,
       required: true,
