@@ -22,7 +22,9 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    cart: [],
+    cart: [
+      
+    ],
     name: {
       type: String,
       required: true,
@@ -31,7 +33,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    options: [],
     total: {
       type: Number,
       required: true,

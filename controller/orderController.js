@@ -1,8 +1,31 @@
 const Order = require('../models/Order');
+const Product = require("../models/Product");
+const Option = require("../models/Option");
 
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({}).sort({ _id: -1 });
+    const orders = await Order.find({});
+    let products ;
+    let options;
+    for (let order of orders) {
+      await order.populate('user').execPopulate();
+      
+      for (let i = 0; i < order.cart.length; i++) {
+        products = [];
+        const product = await Product.findById(order.cart[i]);
+        products.push(product);
+      }
+      for (let i = 0; i < order.option?.length; i++) {
+        options = [];
+        const option = await Option.findById(order.option[i]);
+        options.push(option);
+      }
+      order.options = options;
+      order.cart = products;
+    }
+   
+    orders.cart = products;
+
     res.send(orders);
   } catch (err) {
     res.status(500).send({
