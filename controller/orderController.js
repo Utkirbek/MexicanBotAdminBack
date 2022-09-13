@@ -5,26 +5,32 @@ const Option = require("../models/Option");
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({});
-    let products ;
-    let options;
+    
+
     for (let order of orders) {
       await order.populate('user').execPopulate();
       
       for (let i = 0; i < order.cart.length; i++) {
-        products = [];
-        const product = await Product.findById(order.cart[i]);
-        products.push(product);
+        let options = [];
+        const product = await Product.findById(order.cart[i].product_id);
+        order.cart[i].product = product;
+
+              for (let j = 0; j < order.cart[i].options.length; j++) {
+                const option = await Option.findById(
+                  order.cart[i].options[j]
+                );
+
+                options.push(option);
+                
+              }
+              order.cart[i].options = options;
       }
-      for (let i = 0; i < order.option?.length; i++) {
-        options = [];
-        const option = await Option.findById(order.option[i]);
-        options.push(option);
-      }
-      order.options = options;
-      order.cart = products;
+            
+      
+      
     }
    
-    orders.cart = products;
+  
 
     res.send(orders);
   } catch (err) {
@@ -37,6 +43,8 @@ const getAllOrders = async (req, res) => {
 const getOrderByUser = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.params.id }).sort({ _id: -1 });
+    
+    
     res.send(orders);
   } catch (err) {
     res.status(500).send({
@@ -48,6 +56,23 @@ const getOrderByUser = async (req, res) => {
 const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
+    let products;
+    let options;
+    
+      await order.populate("user").execPopulate();
+
+      for (let i = 0; i < order.cart.length; i++) {
+        products = [];
+        const product = await Product.findById(order.cart[i]);
+        products.push(product);
+      }
+      for (let i = 0; i < order.option?.length; i++) {
+        options = [];
+        const option = await Option.findById(order.option[i]);
+        options.push(option);
+      }
+      order.options = options;
+      order.cart = products;
     res.send(order);
   } catch (err) {
     res.status(500).send({

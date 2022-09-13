@@ -6,7 +6,7 @@ const addOrder = async (req, res) => {
 
     const newOrder = new Order({
       ...req.body,
-      user: req.body.userid,
+      user: req.body.user_id,
     });
     const order = await newOrder.save();
     res.status(201).send(order);

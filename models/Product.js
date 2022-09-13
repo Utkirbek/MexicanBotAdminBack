@@ -14,18 +14,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    options: [
-      {
-        id: String,
-        label: {
-          type: String,
-          required: true,
-        },
-        value: {
-          type: String,
-        },
-      },
-    ],
+    options: [],
     price: {
       type: Number,
       required: true,

@@ -25,15 +25,12 @@ const orderSchema = new mongoose.Schema(
     cart: [
       
     ],
-    name: {
+
+    address_name: {
       type: String,
       required: true,
     },
-    address: {
-      type: String,
-      required: true,
-    },
-    options: [],
+
     total: {
       type: Number,
       required: true,
