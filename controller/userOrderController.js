@@ -3,13 +3,13 @@ const { handleProductQuantity } = require('../config/others');
 
 const addOrder = async (req, res) => {
   try {
+
     const newOrder = new Order({
       ...req.body,
-      user: req.user._id,
+      user: req.body.userid,
     });
     const order = await newOrder.save();
     res.status(201).send(order);
-    handleProductQuantity(order.cart);
   } catch (err) {
     res.status(500).send({
       message: err.message,

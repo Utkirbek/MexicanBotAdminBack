@@ -36,7 +36,7 @@ app.use('/api/products/', productRoutes);
 app.use('/api/option/',cors(), optionRoutes);
 // app.use('/api/coupon/', couponRoutes);
 app.use('/api/user/', userRoutes);
-app.use('/api/order/', isAuth, userOrderRoutes);
+app.use('/api/order/', userOrderRoutes);
 
 //if you not use admin dashboard then these two route will not needed.
 app.use('/api/admin/', adminRoutes);

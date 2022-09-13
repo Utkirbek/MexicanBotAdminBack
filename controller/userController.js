@@ -210,6 +210,7 @@ const registerUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}).sort({ _id: -1 });
+    console.log(users);
     res.send(users);
   } catch (err) {
     res.status(500).send({ message: err.message });
