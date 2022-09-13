@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const Option = require("../models/Option");
 
 const addProduct = async (req, res) => {
   try {
@@ -55,6 +56,16 @@ const getDiscountedProducts = async (req, res) => {
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find({}).sort({ _id: -1 });
+    
+    for(i=0;i<products.length;i++){
+      let options = [];
+      for(j=0;j<products[i].options.length;j++){
+        const option =  await Option.findById(products[i].options[j]);
+        options.push(option);
+      }
+      products[i].options = options;
+
+    }
     res.send(products);
   } catch (err) {
     res.status(500).send({
