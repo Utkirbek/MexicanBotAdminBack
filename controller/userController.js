@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const axios = require("axios").default;
-const { signInToken, tokenForVerify, sendEmail } = require('../config/auth');
+const Open = require("../models/Open");
 
 // const verifyEmailAddress = async (req, res) => {
 //   const isAdded = await User.findOne({ email: req.body.email });
@@ -248,11 +248,12 @@ const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?ch
 const checkUser = async (req, res) => {
   try {
     const user = await User.findOne({chatid:req.body.chatid});
-    ;
+    const open = await Open.findById(`${process.env.OPEN_ID}`);
+    
     if (!user) {
       res.send({ error: "User not found" });
     }else{
-      res.send({user:user});
+      res.send({user:user, opening_times:open});
     }
   
   } catch (err) {

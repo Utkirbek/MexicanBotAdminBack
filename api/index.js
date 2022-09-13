@@ -12,6 +12,7 @@ const userOrderRoutes = require('../routes/userOrderRoutes');
 const categoryRoutes = require('../routes/categoryRoutes');
 const couponRoutes = require('../routes/couponRoutes');
 const optionRoutes = require("../routes/optionRoutes");
+const openRoutes = require("../routes/openRoutes");
 const { isAuth, isAdmin } = require('../config/auth');
 
 connectDB();
@@ -37,7 +38,7 @@ app.use('/api/option/',cors(), optionRoutes);
 // app.use('/api/coupon/', couponRoutes);
 app.use('/api/user/', userRoutes);
 app.use('/api/order/', userOrderRoutes);
-
+app.use("/api/open/", openRoutes);
 //if you not use admin dashboard then these two route will not needed.
 app.use('/api/admin/', adminRoutes);
 app.use('/api/orders/', orderRoutes);
