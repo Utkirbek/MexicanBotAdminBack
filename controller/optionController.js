@@ -1,11 +1,11 @@
-const Option = require('../models/Option');
+const Option = require("../models/Option");
 
 const addOption = async (req, res) => {
   try {
     const newOption = new Option(req.body);
     await newOption.save();
     res.status(200).send({
-      message: 'Option Added Successfully!',
+      message: "Option Added Successfully!",
     });
   } catch (err) {
     res.status(500).send({
@@ -14,9 +14,42 @@ const addOption = async (req, res) => {
   }
 };
 
+const addAllOption = async (req, res) => {
+  try {
+    await Option.insertMany(req.body);
+    res.status(200).send({
+      message: "Option Added successfully!",
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
 
+const getShowingOption = async (req, res) => {
+  try {
+    const categories = await Option.find({ status: "Show" }).sort({
+      _id: -1,
+    });
+    res.send(categories);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
 
-
+const getOptionById = async (req, res) => {
+  try {
+    const category = await Option.findById(req.params.id);
+    res.send(category);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
 
 const getAllOption = async (req, res) => {
   try {
@@ -29,31 +62,21 @@ const getAllOption = async (req, res) => {
   }
 };
 
-const getOptionById = async (req, res) => {
-  try {
-    const option = await Option.findById(req.params.id);
-    res.send(option);
-  } catch (err) {
-    res.status(500).send({
-      message: err.message,
-    });
-  }
-};
+
 
 const updateOption = async (req, res) => {
   try {
-    const option = await Option.findById(req.params.id);
-    if (option) {
-      option.parent = req.body.parent;
-      // option.slug = req.body.slug;
-      option.type = req.body.type;
-      option.icon = req.body.icon;
-      option.children = req.body.children;
-      await option.save();
-      res.send({ message: 'Option Updated Successfully!' });
+    const category = await Option.findById(req.params.id);
+    if (category) {
+      category.label = req.body.label;
+
+      category.value = req.body.value;
+
+      await category.save();
+      res.send({ message: "Option Updated Successfully!" });
     }
   } catch (err) {
-    res.status(404).send({ message: 'Option not found!' });
+    res.status(404).send({ message: "Option not found!" });
   }
 };
 
@@ -67,18 +90,21 @@ const deleteOption = (req, res) => {
       });
     } else {
       res.status(200).send({
-        message: 'Option Deleted Successfully!',
+        message: "Option Deleted Successfully!",
       });
     }
   });
 
-
+  
 };
 
 module.exports = {
   addOption,
+  addAllOption,
   getAllOption,
+  getShowingOption,
   getOptionById,
   updateOption,
+ 
   deleteOption,
 };

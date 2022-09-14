@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   addOption,
   getAllOption,
-  getOptionById,
+getOptionById,
   updateOption,
   deleteOption,
 } = require("../controller/optionController");
@@ -14,7 +14,7 @@ router.post("/add", addOption);
 //get all Option
 router.get("/", getAllOption);
 
-//get a Option
+
 router.get("/:id", getOptionById);
 
 //update a Option

@@ -210,7 +210,7 @@ const registerUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}).sort({ _id: -1 });
-    console.log(users);
+    
     res.send(users);
   } catch (err) {
     res.status(500).send({ message: err.message });
@@ -266,8 +266,7 @@ const checkUser = async (req, res) => {
 const checkUserStatus = async (req, res) => {
   try {
     const user = await User.find({chatid :req.params.id});
-    console.log(user);
-    console.log(req.params.id);
+    
     if (user[0].status==="verified") {
       res.send({"isVerified":true});
     }else{
