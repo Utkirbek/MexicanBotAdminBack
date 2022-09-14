@@ -1,5 +1,7 @@
 const Order = require('../models/Order');
 const { handleProductQuantity } = require('../config/others');
+const Option = require("../models/Option");
+const Product = require("../models/Product");
 
 const addOrder = async (req, res) => {
   try {
@@ -9,7 +11,24 @@ const addOrder = async (req, res) => {
       user: req.body.user_id,
     });
     const order = await newOrder.save();
-    res.status(201).send(order);
+    
+    
+      await order.populate("user").execPopulate();
+
+      for (let i = 0; i < order.cart.length; i++) {
+        let options = [];
+        const product = await Product.findById(order.cart[i].product_id);
+        order.cart[i].product = product;
+
+        for (let j = 0; j < order.cart[i].options.length; j++) {
+          const option = await Option.findById(order.cart[i].options[j]);
+
+          options.push(option);
+        }
+        order.cart[i].options = options;
+      }
+      res.status(201).send(order);
+   
   } catch (err) {
     res.status(500).send({
       message: err.message,
