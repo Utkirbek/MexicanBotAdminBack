@@ -12,8 +12,11 @@ const {
   updateProduct,
   updateStatus,
   deleteProduct,
-} = require('../controller/productController');
+  getProductByCategoryId,
+} = require("../controller/productController");
 
+
+router.get("/category/:category", getProductByCategoryId);
 //add a product
 router.post('/add', addProduct);
 
