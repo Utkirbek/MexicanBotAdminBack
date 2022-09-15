@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const Option = require("../models/Option");
+const Category = require("../models/Category");
 
 const addProduct = async (req, res) => {
   try {
@@ -59,6 +60,8 @@ const getAllProducts = async (req, res) => {
     
     for(i=0;i<products.length;i++){
       let options = [];
+      const  category = await Category.findById(products[i].category);
+      products[i].category = category;
       for(j=0;j<products[i].options.length;j++){
         const option =  await Option.findById(products[i].options[j]);
         options.push(option);
