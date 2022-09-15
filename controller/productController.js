@@ -114,18 +114,16 @@ const updateProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (product) {
-      product.sku = req.body.sku;
+      
       product.title = req.body.title;
-      product.slug = req.body.slug;
-      product.description = req.body.description;
-      product.type = req.body.type;
-      product.unit = req.body.unit;
-      product.quantity = req.body.quantity;
-      product.originalPrice = req.body.originalPrice;
+      
+      
+      
+      
       product.price = req.body.price;
-      product.discount = req.body.discount;
+      product.options = req.body.options;
       product.image = req.body.image;
-      product.tag = req.body.tag;
+      
       await product.save();
       res.send({ data: product, message: 'Product updated successfully!' });
     }

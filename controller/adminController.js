@@ -10,7 +10,7 @@ const registerAdmin = async (req, res) => {
   try {
     const isAdded = await Admin.findOne({ email: req.body.email });
     if (isAdded) {
-      return res.status(403).send({
+      res.status(403).send({
         message: 'This Email already Added!',
       });
     } else {
@@ -66,7 +66,7 @@ const loginAdmin = async (req, res) => {
 const forgetPassword = async (req, res) => {
   const isAdded = await Admin.findOne({ email: req.body.verifyEmail });
   if (!isAdded) {
-    return res.status(404).send({
+    res.status(404).send({
       message: 'Admin/Staff Not found with this email!',
     });
   } else {
@@ -104,7 +104,7 @@ const resetPassword = async (req, res) => {
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET_FOR_VERIFY, (err, decoded) => {
       if (err) {
-        return res.status(500).send({
+        res.status(500).send({
           message: 'Token expired, please try again!',
         });
       } else {
@@ -122,7 +122,7 @@ const addStaff = async (req, res) => {
   try {
     const isAdded = await Admin.find({ email: req.body.data.email });
     if (isAdded) {
-      return res.status(500).send({
+      res.status(500).send({
         message: 'This Email already Added!',
       });
     } else {
