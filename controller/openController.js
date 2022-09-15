@@ -14,6 +14,19 @@ const addOpen = async (req, res) => {
     });
   }
 };
+
+const getOpen = async (req, res) => {
+  try {
+    const category = await Open.findById(`${process.env.OPEN_ID}`);
+    console.log(category);
+    res.send(category);
+  } catch (err) {
+    console.log(err.message),
+      res.status(500).send({
+        message: err.message,
+      });
+  }
+};
 const updateOpen = async (req, res) => {
   try {
     
@@ -33,6 +46,7 @@ const updateOpen = async (req, res) => {
 
 
 module.exports = {
+  getOpen,
    addOpen,
     updateOpen,
 };
