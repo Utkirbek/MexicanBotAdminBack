@@ -1,13 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {
- 
-
-  updateOpen,
-
-} = require("../controller/openController");
+const { updateOpen, addOpen } = require("../controller/openController");
 
 //add a Open
+router.post("/add", addOpen);
 
 
 

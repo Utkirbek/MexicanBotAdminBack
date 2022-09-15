@@ -1,5 +1,19 @@
 const Open = require("../models/Open");
-
+const addOpen = async (req, res) => {
+  try {
+    
+    const newCategory = new Open(req.body);
+    await newCategory.save();
+    res.status(200).send({
+      open: newCategory,
+      message: "Open Added Successfully!",
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
 const updateOpen = async (req, res) => {
   try {
     
@@ -19,7 +33,7 @@ const updateOpen = async (req, res) => {
 
 
 module.exports = {
-   
+   addOpen,
     updateOpen,
 };
 
