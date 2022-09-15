@@ -66,9 +66,9 @@ const updateCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
     if (category) {
-      category.label = req.body.label;
+      category.name = req.body.name;
       
-      category.value = req.body.value;
+      
       
       await category.save();
       res.send({ message: 'Category Updated Successfully!' });
