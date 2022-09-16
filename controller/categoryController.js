@@ -67,6 +67,7 @@ const updateCategory = async (req, res) => {
     const category = await Category.findById(req.params.id);
     if (category) {
       category.name = req.body.name;
+      category.rating = req.body.rating;
       
       
       

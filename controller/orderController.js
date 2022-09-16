@@ -13,6 +13,7 @@ const getAllOrders = async (req, res) => {
       for (let i = 0; i < order.cart.length; i++) {
         let options = [];
         const product = await Product.findById(order.cart[i].product_id);
+
         order.cart[i].product = product;
 
               for (let j = 0; j < order.cart[i].options.length; j++) {
