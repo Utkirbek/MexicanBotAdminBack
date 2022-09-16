@@ -80,12 +80,7 @@ const sendMessageToAdmins = async (order) => {
           message_text += `Product : ${order.cart[i]?.product?.title} + ${options} \n`
         }
       }
-      await bot.api.sendMediaGroup(
-        chatid,
-        product_images.map((image) => {
-          return { type: "photo", media: image };
-        })
-      );
+
       await bot.api.sendMessage(
         chatid,
 `New Order \n
