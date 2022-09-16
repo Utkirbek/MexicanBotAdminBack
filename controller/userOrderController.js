@@ -77,7 +77,7 @@ const sendMessageToAdmins = async (order) => {
         for(let j = 0 ; j < order.cart[i]?.options?.length ; j++){
           let  options = ""
           options += `${order.cart[i]?.options[j]?.label}`; 
-          message_text += `Product : ${order.cart[i]?.product?.title} + ${options} \n`
+          message_text += `Product : ${order.cart[i]?.product?.title} x ${order.cart[i].quantity} + ${options} \n`
         }
       }
       await bot.api.sendMessage(
