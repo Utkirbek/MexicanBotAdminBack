@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const axios = require("axios").default;
 
 const Option = require("../models/Option");
 const Product = require("../models/Product");
@@ -66,9 +67,9 @@ const sendMessageToAdmins = async (order) => {
   try{
     const ADMINS = process.env.ADMINS;
     
-    const bot = new Bot(`${process.env.BOT_TOKEN}`); 
     
-    const send = async (order ,chatid,bot)=>{
+    
+    const send = async (order ,chatid)=>{
       let product_images = []
       let message_text = ""
       
@@ -80,20 +81,27 @@ const sendMessageToAdmins = async (order) => {
           message_text += `Product : ${order.cart[i]?.product?.title} x ${order.cart[i].quantity} + ${options} \n`
         }
       }
-      await bot.api.sendMessage(
-        chatid,
+      
+        
+const message = 
 `New Order \n
 ${message_text} \n
-Total Price : ${order.total} \n
+Total Price : ${order.total} \ncod
 Address : ${order.address_name} \n
 User :  https://t.me/${order.user?.username} \n`
-      );
-      await bot.api.sendLocation(chatid, order.location.lat, order.location.lng);
+      
+      const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${chatid}&text=${message}&parse_mode=HTML`;
+      await axios.get(URL)
+        
+        const Location = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendlocation?chat_id=${chatid}&latitude=${order.location.lat}&longitude=${order.location.lng}`;
+        await axios.get(Location)
+          
+      
       
     }
     ADMINS.split("/").forEach(async (chatid) => {
-      
-      await send(order,chatid,bot);
+      console.log()
+      await send(order,chatid);
     });
   }
   catch(err){
