@@ -2,8 +2,9 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const axios = require("axios").default;
+
 const Open = require("../models/Open");
+const { Bot } = require("grammy");
 
 // const verifyEmailAddress = async (req, res) => {
 //   const isAdded = await User.findOne({ email: req.body.email });
@@ -223,19 +224,21 @@ const sendMessage = async (id,newStatus) => {
   let user = await User.findById(id);
   let message = '';
   if(newStatus === 'verified'){
-    message = `🟢 (bold)משתמש מאומת (bold)`;
+    message = `🟢 <b>משתמש מאומת </b>`;
   }else if(newStatus === 'blocked'){
-    message = `🔴 (bold)משתמש לא מאומת(bold)
+    message = `🔴 <b>משתמש לא מאומת</b>;
 *בקשת האימות נדחתה, 
-אנא פנה ל-(bold)׳שירות לקוחות 👩‍💻׳ (bold)לפרטים נוספים.`;
+אנא פנה ל-<b>׳שירות לקוחות 👩‍💻׳ </b>לפרטים נוספים.`;
   }else{
-    message = `🟡 (bold)משתמש בבדיקה  (bold)
+    message = `🟡 <b>משתמש בבדיקה  </b>;
 *בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..`;
   }
   await bot.api.sendMessage(
-    chatid,
+    user.chatid,
     message,
+     { parse_mode: "HTML" },
   );
+  
 
   }catch(err){
     res.status(500).send({ message: err.message });
