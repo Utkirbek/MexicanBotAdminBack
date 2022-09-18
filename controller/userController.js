@@ -219,26 +219,24 @@ const getAllUsers = async (req, res) => {
 
 const sendMessage = async (id,newStatus) => {
   try{
-    let user = await User.findById(id);
+    const bot = new Bot(`${process.env.BOT_TOKEN}`);
+  let user = await User.findById(id);
   let message = '';
   if(newStatus === 'verified'){
-    message = `Your account has been verified. Now you can login to your account.`
+    message = `🟢 (bold)משתמש מאומת (bold)`;
   }else if(newStatus === 'blocked'){
-    message = `Your account has been blocked.`
+    message = `🔴 (bold)משתמש לא מאומת(bold)
+*בקשת האימות נדחתה, 
+אנא פנה ל-(bold)׳שירות לקוחות 👩‍💻׳ (bold)לפרטים נוספים.`;
+  }else{
+    message = `🟡 (bold)משתמש בבדיקה  (bold)
+*בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..`;
   }
-const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
-  await  axios.get(URL)
-  .then(function (response) {
-    // handle success
-    
-  })
-  .catch(function (error) {
-    // handle error
-    
-  })
-  .then(function () {
-    // always executed
-  });
+  await bot.api.sendMessage(
+    chatid,
+    message,
+  );
+
   }catch(err){
     res.status(500).send({ message: err.message });
   }
