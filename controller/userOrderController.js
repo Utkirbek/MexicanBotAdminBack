@@ -2,7 +2,8 @@ const Order = require("../models/Order");
 
 const Option = require("../models/Option");
 const Product = require("../models/Product");
-const { Bot } = require("grammy");
+const { sendMessageToAdmins, sendMessageToOwner } = require("../bot");
+
 
 const addOrder = async (req, res) => {
   try {
@@ -28,6 +29,7 @@ const addOrder = async (req, res) => {
       order.cart[i].options = options;
     }
     sendMessageToAdmins(order);
+    sendMessageToOwner(order.user.chatid);
     res.status(201).send(order);
   } catch (err) {
     res.status(500).send({
@@ -58,43 +60,8 @@ const getOrderById = async (req, res) => {
   }
 };
 
-const sendMessageToAdmins = async (order) => {
-  try {
-    const ADMINS = process.env.ADMINS;
 
-    const bot = new Bot(`${process.env.BOT_TOKEN}`);
 
-    const send = async (order, chatid, bot) => {
-      let product_images = [];
-      let message_text = "";
-
-      for (let i = 0; i < order.cart.length; i++) {
-        product_images.push(order.cart[i]?.product?.image);
-        for (let j = 0; j < order.cart[i]?.options?.length; j++) {
-          let options = "";
-          options += `${order.cart[i]?.options[j]?.label}`;
-          message_text += `Product : ${order.cart[i]?.product?.title} x ${order.cart[i].quantity} + ${options} \n`;
-        }
-      }
-      await bot.api.sendMessage(
-        chatid,
-        `New Order \n
-${message_text} \n
-Total Price : ${order.total} \n
-Address : ${order.address_name} \n
-User :  https://t.me/${order.user?.username} \n`
-      );
-      await bot.api.sendLocation(
-        chatid,
-        order.location.lat,
-        order.location.lng
-      );
-    };
-    ADMINS.split("/").forEach(async (chatid) => {
-      await send(order, chatid, bot);
-    });
-  } catch (err) {}
-};
 module.exports = {
   addOrder,
   getOrderById,

@@ -2,9 +2,10 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const {sendMessageToUser} = require("../bot")
 
 const Open = require("../models/Open");
-const { Bot } = require("grammy");
+
 
 // const verifyEmailAddress = async (req, res) => {
 //   const isAdded = await User.findOne({ email: req.body.email });
@@ -222,35 +223,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const sendMessageToUser = async (id,newStatus) => {
-  try{
-    
-  const bot = new Bot(`${process.env.BOT_TOKEN}`);
-  let user = await User.findById(id);
-  
-  let message = '';
-  if(newStatus === 'verified'){
-    message = `🟢 <b>משתמש מאומת </b>`;
-  }else if(newStatus === 'blocked'){
-    message = `🔴 <b>משתמש לא מאומת</b>;
-*בקשת האימות נדחתה, 
-אנא פנה ל-<b>׳שירות לקוחות 👩‍💻׳ </b>לפרטים נוספים.`;
-  }else{
-    message = `🟡 <b>משתמש בבדיקה  </b>;
-*בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..`;
-  }
-  await bot.api.sendMessage(
-    user.chatid,
-    message,
-    {parse_mode: 'HTML'}
-  );
-  
 
-  }catch(err){
-    
-  }
-
-}
 
 const checkUser = async (req, res) => {
   try {
