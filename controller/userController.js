@@ -41,7 +41,11 @@ const { Bot } = require("grammy");
 // };
 
 const registerUser = async (req, res) => {
-  
+  const  user = await User.findOne({ chatid: req.body.chatid });
+  if (user) {
+    res.status(400).send({ message: "User Already Registered" });
+    return 
+  }
   
 
  const newUser = new User({
@@ -218,10 +222,12 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const sendMessage = async (id,newStatus) => {
+const sendMessageToUser = async (id,newStatus) => {
   try{
-    const bot = new Bot(`${process.env.BOT_TOKEN}`);
+    
+  const bot = new Bot(`${process.env.BOT_TOKEN}`);
   let user = await User.findById(id);
+  
   let message = '';
   if(newStatus === 'verified'){
     message = `🟢 <b>משתמש מאומת </b>`;
@@ -236,12 +242,12 @@ const sendMessage = async (id,newStatus) => {
   await bot.api.sendMessage(
     user.chatid,
     message,
-     { parse_mode: "HTML" },
+    {parse_mode: 'HTML'}
   );
   
 
   }catch(err){
-    res.status(500).send({ message: err.message });
+    
   }
 
 }
@@ -339,7 +345,7 @@ const updateStatusUser = (req, res) => {
           message: err.message,
         });
       } else {
-        sendMessage(req.params.id,newStatus);
+        sendMessageToUser(req.params.id,newStatus);
         res.status(200).send({
           message: `Product ${newStatus} Successfully!`,
         });
