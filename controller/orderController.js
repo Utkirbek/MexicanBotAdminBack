@@ -4,7 +4,7 @@ const Option = require("../models/Option");
 
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({});
+    const orders = await Order.find({}).sort({ _id: -1 });
     
 
     for (let order of orders) {
