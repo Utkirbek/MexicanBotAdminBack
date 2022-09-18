@@ -2,6 +2,8 @@ const Order = require('../models/Order');
 const Product = require("../models/Product");
 const Option = require("../models/Option");
 
+const { sendMessageToUserAboutOrderStatus } = require("../bot");
+
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({}).sort({ _id: -1 });
@@ -82,9 +84,12 @@ const getOrderById = async (req, res) => {
   }
 };
 
-const updateOrder = (req, res) => {
+const updateOrder = async ( req, res) => {
   const newStatus = req.body.status;
-  Order.updateOne(
+const order = await Order.findById(req.params.id);
+
+  
+  await Order.updateOne(
     {
       _id: req.params.id,
     },
@@ -99,8 +104,9 @@ const updateOrder = (req, res) => {
           message: err.message,
         });
       } else {
+        sendMessageToUserAboutOrderStatus(order.user, newStatus);
         res.status(200).send({
-          message: 'Order Updated Successfully!',
+          message: "Order Updated Successfully!",
         });
       }
     }

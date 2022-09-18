@@ -3,7 +3,7 @@ const User = require("./models/User");
 const bot = new Bot(`${process.env.BOT_TOKEN}`);
 
 
-const sendMessageToAdmins = async (order) => {
+const sendMessageToAdminsAboutNewOrder = async (order) => {
   try {
     const ADMINS = process.env.ADMINS;
 
@@ -38,7 +38,7 @@ User :  https://t.me/${order.user?.username} \n`
     });
   } catch (err) {}
 };
-const sendMessageToOwner = async (chatid) => {
+const sendMessageToOwnerAboutNewOrder = async (chatid) => {
   try {
     await bot.api.sendMessage(
       chatid,
@@ -46,7 +46,7 @@ const sendMessageToOwner = async (chatid) => {
     );
   } catch (err) {}
 };
-const sendMessageToUser = async (id, newStatus) => {
+const sendMessageToUserAboutStatus = async (id, newStatus) => {
   try {
     
     let user = await User.findById(id);
@@ -65,10 +65,26 @@ const sendMessageToUser = async (id, newStatus) => {
     await bot.api.sendMessage(user.chatid, message, { parse_mode: "HTML" });
   } catch (err) {}
 };
+const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
+  try {
+    let user = await User.findById(id);
+    
+    let message = "";
+    if (newStatus === "Processing") {
+      message = `Your Order Has Been Received and Is Being Processed`;
+    } else if (newStatus === "Delivered") {
+      message = `Your Order Has Been Delivered`;
+    } else {
+      message = `Your Order is Pending`;
+    }
+    await bot.api.sendMessage(user.chatid, message, { parse_mode: "HTML" });
+  } catch (err) {}
+};
 
 
 module.exports = {
-  sendMessageToAdmins,
-  sendMessageToOwner,
-  sendMessageToUser,
+  sendMessageToUserAboutOrderStatus,
+  sendMessageToAdminsAboutNewOrder,
+  sendMessageToOwnerAboutNewOrder,
+  sendMessageToUserAboutStatus,
 };
