@@ -104,7 +104,7 @@ const order = await Order.findById(req.params.id);
           message: err.message,
         });
       } else {
-        sendMessageToUserAboutOrderStatus(order.user, newStatus);
+        // sendMessageToUserAboutOrderStatus(order.user, newStatus);
         res.status(200).send({
           message: "Order Updated Successfully!",
         });
