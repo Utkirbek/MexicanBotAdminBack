@@ -3,10 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { sendMessageToUserAboutStatus } = require("../bot");
-
 const Open = require("../models/Open");
-
-
 
 
 const registerUser = async (req, res) => {
@@ -15,7 +12,6 @@ const registerUser = async (req, res) => {
     res.status(400).send({ message: "User Already Registered" });
     return 
   }
-  
 
  const newUser = new User({
    ...req.body,
@@ -26,10 +22,6 @@ const registerUser = async (req, res) => {
    message: "Your account created successfully, you can login now!",
  });}
     
-  
-
-
-
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}).sort({ _id: -1 });
@@ -39,8 +31,6 @@ const getAllUsers = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
-
-
 
 const checkUser = async (req, res) => {
   try {
@@ -76,8 +66,6 @@ const checkUserStatus = async (req, res) => {
     });
   }
 };
-
-
 
 const deleteUser = (req, res) => {
   User.deleteOne({ _id: req.params.id }, (err) => {
@@ -121,18 +109,10 @@ const updateStatusUser = (req, res) => {
 
 
 module.exports = {
-  // loginUser,
   registerUser,
   updateStatusUser,
-  // // signUpWithProvider,
-  // verifyEmailAddress,
-  // forgetPassword,
-  // changePassword,
-  // resetPassword,
   checkUserStatus,
   getAllUsers,
-
   checkUser,
-  // updateUser,
   deleteUser,
 };

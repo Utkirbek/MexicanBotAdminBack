@@ -4,7 +4,7 @@ const Option = require("../models/Option");
 const Product = require("../models/Product");
 const {
   sendMessageToAdminsAboutNewOrder,
-  sendMessageToOwnerAboutNewOrder,
+  // sendMessageToOwnerAboutNewOrder,
 } = require("../bot");
 
 
@@ -32,7 +32,7 @@ const addOrder = async (req, res) => {
       order.cart[i].options = options;
     }
     sendMessageToAdminsAboutNewOrder(order);
-    sendMessageToOwnerAboutNewOrder(order.user.chatid);
+    // sendMessageToOwnerAboutNewOrder(order.user.chatid);
     res.status(201).send(order);
   } catch (err) {
     res.status(500).send({
