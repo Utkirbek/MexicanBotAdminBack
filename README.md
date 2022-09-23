@@ -2,9 +2,7 @@
 
 
 
-Introduction: 
 
-This is ready api backend for dashtar admin and frontend built with node.js, express, mongoose, and mongodb for database. 
 
 
 Tech and Packages we use in this project:
