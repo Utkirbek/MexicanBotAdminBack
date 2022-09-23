@@ -1,7 +1,7 @@
 {
-  "name": "dashtar-admin",
+
   "version": "0.1.0",
-  "description": "this is the server of dashtar built with node, express, mongoose schema validation and use mongodb as a database",
+ 
   "main": "index.js",
   "scripts": {
     "dev": "nodemon api/index.js",
