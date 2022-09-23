@@ -1,5 +1,5 @@
 
-dashtar Server Documentation
+
 
 
 Introduction: 
@@ -53,6 +53,3 @@ Folder Structure & Customization:
 
 
 
-Configuration & Deployment:
-
-We use heroku for hosting this server if you want to hosting on heroku just follow their documentation, You can also hosting this any other hosting services.
