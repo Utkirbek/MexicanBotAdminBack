@@ -1,7 +1,7 @@
-const { default: axios } = require("axios");
-const { Bot } = require("grammy");
+const   axios  = require("axios");
+
 const User = require("./models/User");
-// const bot = new Bot(`${process.env.BOT_TOKEN}`);
+
 
 
 const sendMessageToAdminsAboutNewOrder = async (order) => {
@@ -56,17 +56,17 @@ const sendMessageToUserAboutStatus = async (id, newStatus) => {
 
     let message = "";
     if (newStatus === "verified") {
-      message = `🟢 <b>משתמש מאומת </b>`;
+      message = `<p>🟢 <b>משתמש מאומת </b></p>`;
     } else if (newStatus === "blocked") {
-      message = `🔴 <b>משתמש לא מאומת</b>;
+      message = `<p>🔴 <b>משתמש לא מאומת</b>;
 *בקשת האימות נדחתה, 
-אנא פנה ל-<b>׳שירות לקוחות 👩‍💻׳ </b>לפרטים נוספים.`;
+אנא פנה ל-<b>׳שירות לקוחות 👩‍💻׳ </b>לפרטים נוספים.</p>`;
     } else {
-      message = `🟡 <b>משתמש בבדיקה  </b>;
-*בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..`;
+      message = `<p>🟡 <b>משתמש בבדיקה  </b>;
+*בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..<p>`;
     }
-    const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
-     axios(URL); 
+    const URL =`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
+      await axios.get(URL);
   } catch (err) {}
 };
 const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
