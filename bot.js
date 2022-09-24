@@ -49,20 +49,25 @@ const sendMessageToOwnerAboutNewOrder = async (chatid) => {
 const sendMessageToUserAboutStatus = async (id, newStatus) => {
   try {
     let user = await User.findById(id);
+    const chatid = user.chatid;
+ 
 
     let message = "";
     if (newStatus === "verified") {
-      message = `<p>🟢 <b>משתמש מאומת </b></p>`;
+      message = `🟢 <b>משתמש מאומת </b>`;
     } else if (newStatus === "blocked") {
-      message = `<p>🔴 <b>משתמש לא מאומת</b>;
+      message = `🔴 <b>משתמש לא מאומת</b>;
 *בקשת האימות נדחתה, 
-אנא פנה ל-<b>׳שירות לקוחות 👩‍💻׳ </b>לפרטים נוספים.</p>`;
+אנא פנה ל-<b>׳שירות לקוחות 👩‍💻׳ </b>לפרטים נוספים.`;
     } else {
-      message = `<p>🟡 <b>משתמש בבדיקה  </b>;
-*בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..<p>`;
+      message = `🟡 <b>משתמש בבדיקה  </b>;
+*בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..`;
     }
-    const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
-    const respomse = await axios.get(URL);
+    const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${chatid}&text=${message}&parse_mode=HTML`;
+    console.log(URL);
+   const response = await axios.get(encodeURI(URL))
+
+    
   } catch (err) {}
 };
 const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
@@ -77,7 +82,7 @@ const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
     } else {
       message = `Your Order is Pending`;
     }
-    const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
+    const URL =`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
     const response = await axios.get(URL);
   } catch (err) {}
 };
