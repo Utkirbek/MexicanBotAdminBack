@@ -1,10 +1,8 @@
 
-dashtar Server Documentation
 
 
-Introduction: 
 
-This is ready api backend for dashtar admin and frontend built with node.js, express, mongoose, and mongodb for database. 
+
 
 
 Tech and Packages we use in this project:
@@ -53,6 +51,3 @@ Folder Structure & Customization:
 
 
 
-Configuration & Deployment:
-
-We use heroku for hosting this server if you want to hosting on heroku just follow their documentation, You can also hosting this any other hosting services.
