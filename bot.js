@@ -1,17 +1,15 @@
-const   axios  = require("axios");
+const axios = require("axios").default;
 
 const User = require("./models/User");
-
-
 
 const sendMessageToAdminsAboutNewOrder = async (order) => {
   try {
     const ADMINS = process.env.ADMINS;
-    if (order.comment==="" ){
-      order.comment= "User did not add any comment"
+    if (order.comment === "") {
+      order.comment = "User did not add any comment";
     }
 
-    const send = async (order, chatid, ) => {
+    const send = async (order, chatid) => {
       let product_images = [];
       let message_text = "";
 
@@ -31,27 +29,25 @@ User :  https://t.me/${order.user?.username} \n
 Comment : ${order?.comment} \n`;
 
       const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${chatid}&text=${message}&parse_mode=HTML`;
-      axios(URL); 
+      const response = await axios.get(URL);
 
       const Location = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendlocation?chat_id=${chatid}&latitude=${order.location.lat}&longitude=${order.location.lng}`;
-      axios(Location);
+      const location = await axios.get(Location);
     };
     ADMINS.split("/").forEach(async (chatid) => {
-      await send(order, chatid, );
+      await send(order, chatid);
     });
   } catch (err) {}
 };
 const sendMessageToOwnerAboutNewOrder = async (chatid) => {
   try {
-    const message = `Congratulations Your Order Has Been Added to Our List. Please Keep in touch to know the status of your order. \n `
+    const message = `Congratulations Your Order Has Been Added to Our List. Please Keep in touch to know the status of your order. \n `;
     const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${chatid}&text=${message}&parse_mode=HTML`;
-    axios(URL); 
-    
+    const  response = await axios.get(URL);
   } catch (err) {}
 };
 const sendMessageToUserAboutStatus = async (id, newStatus) => {
   try {
-    
     let user = await User.findById(id);
 
     let message = "";
@@ -65,14 +61,14 @@ const sendMessageToUserAboutStatus = async (id, newStatus) => {
       message = `<p>🟡 <b>משתמש בבדיקה  </b>;
 *בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..<p>`;
     }
-    const URL =`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
-      await axios(URL);
+    const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
+    const respomse = await axios.get(URL);
   } catch (err) {}
 };
 const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
   try {
     let user = await User.findById(id);
-    
+
     let message = "";
     if (newStatus === "Processing") {
       message = `Your Order Has Been Received and Is Being Processed`;
@@ -82,10 +78,9 @@ const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
       message = `Your Order is Pending`;
     }
     const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
-    axios(URL); 
+    const response = await axios.get(URL);
   } catch (err) {}
 };
-
 
 module.exports = {
   sendMessageToUserAboutOrderStatus,
