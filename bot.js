@@ -66,7 +66,7 @@ const sendMessageToUserAboutStatus = async (id, newStatus) => {
 *בדיקה לוקחת עד כ-10 דקות בשעות הפעילות..<p>`;
     }
     const URL =`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
-      await axios.get(URL);
+      await axios(URL);
   } catch (err) {}
 };
 const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
