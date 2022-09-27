@@ -87,9 +87,20 @@ const sendMessageToUserAboutOrderStatus = async (id, newStatus) => {
   } catch (err) {}
 };
 
+
+const requestPhoneNumberFromUser = async (id) => {
+  try {
+    let user = await User.findById(id);
+      const message = `Please Send Your Phone Number To Verify Your Account`;
+    const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML&reply_markup={"keyboard":[[{"text":"Send Phone Number","request_contact":true} ]],"resize_keyboard":true,"one_time_keyboard":true}`;
+    const response = await axios.get(URL);
+  } catch (err) {}
+};
+
 module.exports = {
   sendMessageToUserAboutOrderStatus,
   sendMessageToAdminsAboutNewOrder,
   sendMessageToOwnerAboutNewOrder,
   sendMessageToUserAboutStatus,
+  requestPhoneNumberFromUser,
 };

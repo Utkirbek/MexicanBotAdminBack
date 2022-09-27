@@ -2,7 +2,7 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const { sendMessageToUserAboutStatus } = require("../bot");
+const { sendMessageToUserAboutStatus  , requestPhoneNumberFromUser} = require("../bot");
 const Open = require("../models/Open");
 
 
@@ -80,6 +80,21 @@ const deleteUser = (req, res) => {
     }
   });
 };
+const requestPhoneNumber = (req, res) => {
+  try {
+    
+    requestPhoneNumberFromUser(req.params.id);
+    res.status(200).send({
+      message: 'Request Sent Successfully!',
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+    });
+    
+  }
+  
+};
 
 const updateStatusUser = (req, res) => {
   const newStatus = req.params.status;
@@ -115,4 +130,5 @@ module.exports = {
   getAllUsers,
   checkUser,
   deleteUser,
+  requestPhoneNumber,
 };
