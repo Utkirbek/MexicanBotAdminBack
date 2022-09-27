@@ -7,6 +7,7 @@ const {
   requestPhoneNumber,
   updateStatusUser,
   getAllUsers,
+  updatePhoneUser,
   
   // updateUser,
   deleteUser,
@@ -16,7 +17,7 @@ const {
   emailVerificationLimit,
 } = require('../config/others');
 
-
+router.get("/update/:phone/:chatid", updatePhoneUser);
 router.post('/request-phone-number/:id', requestPhoneNumber);
 router.post('/add', registerUser);
 router.get("/check/status/:id", checkUserStatus);

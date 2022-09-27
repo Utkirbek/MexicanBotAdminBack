@@ -120,6 +120,29 @@ const updateStatusUser = (req, res) => {
     }
   );
 };
+const updatePhoneUser = (req, res) => {
+  const newPhone = req.params.phone;
+  User.updateOne(
+    { chatid: req.params.chatid },
+    {
+      $set: {
+        phone: newPhone
+      },
+    },
+    (err) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message,
+        });
+      } else {
+       
+        res.status(200).send({
+          message: `User Phone Successfully Changed!`,
+        });
+      }
+    }
+  );
+};
 
 
 
@@ -131,4 +154,5 @@ module.exports = {
   checkUser,
   deleteUser,
   requestPhoneNumber,
+  updatePhoneUser,
 };
