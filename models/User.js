@@ -30,11 +30,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    isChecked:{
+    isChecked: {
       type: String,
       default: "Pending",
       enum: ["Pending", "Done"],
-
     },
     status: {
       type: String,
@@ -42,11 +41,29 @@ const userSchema = new mongoose.Schema(
       default: "blocked",
       enum: ["verified", "blocked"],
     },
+    messages: [
+      {
+        message: {
+          type: String,
+          required: true,
+        },
+        sender: {
+          type: String,
+          enum: ["user", "admin"],
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+userSchema.methods.addMessage = function (message, sender) {
+  this.messages.push({ message, sender });
+  return this.save();
+};
+
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 

@@ -143,10 +143,14 @@ const updatePhoneUser = (req, res) => {
     }
   );
 };
+const sendMessage = (message, sender, user) => {
+  user.addMessage(message,sender);
+};
 
 
 
 module.exports = {
+  sendMessage,
   registerUser,
   updateStatusUser,
   checkUserStatus,
