@@ -8,6 +8,8 @@ const {
   updateStatusUser,
   getAllUsers,
   updatePhoneUser,
+  sendMessage,
+  getMessage,
   
   // updateUser,
   deleteUser,
@@ -22,6 +24,8 @@ router.post('/request-phone-number/:id', requestPhoneNumber);
 router.post('/add', registerUser);
 router.get("/check/status/:id", checkUserStatus);
 router.post("/check", checkUser)
+router.post("/send/message/:id", sendMessage)
+router.get("/get/message/:id", getMessage)
 
 router.get("/status/:id/:status", updateStatusUser);
 //get all user

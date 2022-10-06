@@ -24,7 +24,7 @@ const registerUser = async (req, res) => {
     
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}).sort({ _id: -1 });
+    const users = await User.find({}).sort({ _id: -1 }).populate("messages  ");
     
     res.send(users);
   } catch (err) {
@@ -143,8 +143,44 @@ const updatePhoneUser = (req, res) => {
     }
   );
 };
-const sendMessage = (message, sender, user) => {
-  user.addMessage(message,sender);
+
+
+
+
+const sendMessage = async(req, res) => {
+  try {
+    const user = await  User.findById(req.params.id).populate("messages")
+
+    user.addMessage(
+      req.body.message, req.body.sender
+    )
+    res.status(200).send({
+      user:user,
+      message: 'Message added succesfully',
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+    });
+    
+  }
+}
+
+
+const getMessage = async(req, res) => {
+    try {
+      const user = await  User.findById(req.params.id).populate("messages")
+      res.status(200).send(
+        user.messages
+        
+      );
+    } catch (error) {
+      res.status(500).send({
+        message: error.message,
+      });
+      
+    }
+ 
 };
 
 
@@ -159,4 +195,5 @@ module.exports = {
   deleteUser,
   requestPhoneNumber,
   updatePhoneUser,
+  getMessage,
 };
