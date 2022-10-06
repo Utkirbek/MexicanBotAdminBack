@@ -147,21 +147,42 @@ const updatePhoneUser = (req, res) => {
 
 
 
-const sendMessage = async(req, res) => {
+const sendMessageByAdmin = async(req, res) => {
   try {
     const user = await  User.findById(req.params.id).populate("messages")
-    if (req.body.sender === 'admin'){
+    
       chatWithUser(req.params.id, req.body.message)
-    }
+    sender = "admin"
 
     user.addMessage(
-      req.body.message, req.body.sender
+      req.body.message, sender
     )
     res.status(200).send({
       user:user,
       message: 'Message added succesfully',
     });
-  } catch (error) {
+  } catch (error) { 
+    res.status(500).send({
+      message: error.message,
+    });
+    
+  }
+}
+const sendMessageByUser = async(req, res) => {
+  try {
+    console.log(req.params)
+    const user = await  User.findOne({chatid: req.params.id}).populate("messages")
+    
+      
+    sender = "user"
+    user.addMessage(
+      req.params.message , sender
+    )
+    res.status(200).send({
+      user:user,
+      message: 'Message added succesfully',
+    });
+  } catch (error) { 
     res.status(500).send({
       message: error.message,
     });
@@ -189,7 +210,8 @@ const getMessage = async(req, res) => {
 
 
 module.exports = {
-  sendMessage,
+  sendMessageByUser,
+  sendMessageByAdmin,
   registerUser,
   updateStatusUser,
   checkUserStatus,
