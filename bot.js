@@ -96,6 +96,13 @@ const requestPhoneNumberFromUser = async (id) => {
     const response = await axios.get(URL);
   } catch (err) {}
 };
+const chatWithUser = async (id, message) => {
+  try {
+    let user = await User.findById(id);
+    const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML&reply_markup={force_reply: true}`;
+    const response = await axios.get(URL);
+  } catch (err) {}
+};
 
 module.exports = {
   sendMessageToUserAboutOrderStatus,
@@ -103,4 +110,5 @@ module.exports = {
   sendMessageToOwnerAboutNewOrder,
   sendMessageToUserAboutStatus,
   requestPhoneNumberFromUser,
+  chatWithUser,
 };

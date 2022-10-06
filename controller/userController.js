@@ -2,7 +2,7 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const { sendMessageToUserAboutStatus  , requestPhoneNumberFromUser} = require("../bot");
+const { sendMessageToUserAboutStatus  , requestPhoneNumberFromUser, chatWithUser} = require("../bot");
 const Open = require("../models/Open");
 
 
@@ -150,6 +150,9 @@ const updatePhoneUser = (req, res) => {
 const sendMessage = async(req, res) => {
   try {
     const user = await  User.findById(req.params.id).populate("messages")
+    if (req.body.sender === 'admin'){
+      chatWithUser(req.params.id, req.body.message)
+    }
 
     user.addMessage(
       req.body.message, req.body.sender
