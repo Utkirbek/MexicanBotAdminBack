@@ -170,7 +170,7 @@ const sendMessageByAdmin = async(req, res) => {
 }
 const sendMessageByUser = async(req, res) => {
   try {
-    console.log(req.params)
+    
     const user = await  User.findOne({chatid: req.params.id}).populate("messages")
     
       
