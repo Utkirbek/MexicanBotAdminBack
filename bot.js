@@ -1,5 +1,5 @@
 const axios = require("axios").default;
-
+const URI = require("uri-js");
 const User = require("./models/User");
 
 const sendMessageToAdminsAboutNewOrder = async (order) => {
@@ -98,11 +98,18 @@ const requestPhoneNumberFromUser = async (id) => {
 };
 const chatWithUser = async (id, message) => {
   try {
+
     let user = await User.findById(id);
     const URL = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${user.chatid}&text=${message}&parse_mode=HTML`;
-    const response = await axios.get(URL);
-  } catch (err) {}
+    const newURL = URI.serialize(URI.parse(URL));
+ 
+    const response = await axios.get(newURL)
+  } catch (err) {
+    console.log(err);
+  }
 };
+
+  
 
 module.exports = {
   sendMessageToUserAboutOrderStatus, 

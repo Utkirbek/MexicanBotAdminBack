@@ -11,6 +11,7 @@ const {
   sendMessageByUser,
   sendMessageByAdmin,
   getMessage,
+  getUserById,
   
   // updateUser,
   deleteUser,
@@ -34,6 +35,7 @@ router.get("/status/:id/:status", updateStatusUser);
 router.get('/', getAllUsers);
 
 //get a user
+router.get('/:id', getUserById);
 ;
 
 // //update a user

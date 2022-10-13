@@ -22,6 +22,17 @@ const registerUser = async (req, res) => {
    message: "Your account created successfully, you can login now!",
  });}
     
+
+ const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    
+    res.send(user);
+    
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}).sort({ _id: -1 }).populate("messages  ");
@@ -153,6 +164,7 @@ const sendMessageByAdmin = async(req, res) => {
     
       chatWithUser(req.params.id, req.body.message)
     sender = "admin"
+   
 
     user.addMessage(
       req.body.message, sender
@@ -173,7 +185,7 @@ const sendMessageByUser = async(req, res) => {
     
     const user = await  User.findOne({chatid: req.params.id}).populate("messages")
     
-      
+      console.log(req.params.message)
     sender = "user"
     user.addMessage(
       req.params.message , sender
@@ -221,4 +233,5 @@ module.exports = {
   requestPhoneNumber,
   updatePhoneUser,
   getMessage,
+  getUserById,
 };
